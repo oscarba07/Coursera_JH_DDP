@@ -1,0 +1,31 @@
+---
+title: "Developing Data Products. JH in Coursera"
+author: "Oscar BA"
+date: "6/22/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## This is week 2 assignment
+### Biggest 50 cities in the world
+Read the data
+```{r, warning=FALSE, message=FALSE}
+df <- read.csv('worldcities.csv')
+```
+Select the top 50 biggest cities by population
+```{r, warning=FALSE, message=FALSE}
+df2 <- head(df[order(df$population, decreasing = TRUE),],50)
+```
+
+*You can download the data from <a>'https://simplemaps.com/data/world-cities'</a>. Last update:2019*
+
+## Here is my map
+```{r, warning=FALSE, message=FALSE}
+library(leaflet)
+mymap <- df2 %>% leaflet() %>% addTiles() %>% addMarkers(label = df2$city) %>% addCircles(radius = sqrt(df2$population)*100, weight = 1)
+mymap
+
+```
